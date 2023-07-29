@@ -1,7 +1,6 @@
 ################ Zarathelle Resin and Crafts Product and Customer Analysis  ###############
 
 Zarathelle_df <- read.csv("Zarathelle 2021 Orders Dataset V1 - Cleaned Data.csv")
-View(Zarathelle_df)
 
 # Rename columns
 Zarathelle_df_V2 <- Zarathelle_df %>% 
@@ -16,7 +15,6 @@ Zarathelle_df_V2 <- Zarathelle_df %>%
          "Product4" = "Order.4",
          "Total_product_quantity" = "Total.Order.Quantity",
          "Total_amount_paid" = "Total.Amount.Paid")
-View(Zarathelle_df_V2)
 
 # Remove unnecessary and merged data for reorganization
 Zarathelle_df_V3 <- subset(Zarathelle_df_V2, select = -c(Total.Amount.Paid.1,
@@ -25,13 +23,11 @@ Zarathelle_df_V3 <- subset(Zarathelle_df_V2, select = -c(Total.Amount.Paid.1,
                                                          Total.Gross,
                                                          Total.Net.for.the.Month,
                                                          Total.Net.for.the.Year))
-View(Zarathelle_df_V3)
 
 # Create an auto increment ID for each purchase
 Zarathelle_df_V4 <- Zarathelle_df_V3 %>% 
   mutate(ID = row_number()) %>% 
   select(Date,ID, everything())
-View(Zarathelle_df_V4)
 
 # Calculate total gross income for every customer
 
@@ -47,5 +43,15 @@ Zarathelle_df_V4$Shipping_fee <- remove_commas_and_convert(Zarathelle_df_V4$Ship
 # Create a new column Total_gross_income_per_purchase
 Zarathelle_df_V4$Total_gross_income_per_purchase <- Zarathelle_df_V4$Total_amount_paid - Zarathelle_df_V4$Shipping_fee
 
-View(Zarathelle_df_V4)
+# Create new column month ordered from date
+Zarathelle_df_V5 <- Zarathelle_df_V4 %>% 
+  mutate(Month_ordered = str_extract(as.character(Date), "\\w+")) %>% 
+  select(Date, ID, Month_ordered, everything())
+
+# Calculate total gross income per month
+Total_gross_income_per_month <- Zarathelle_df_V5 %>% 
+  group_by(Month_ordered) %>% 
+  summarize(Total_gross_income_per_month = sum(Total_gross_income_per_purchase))
+View(Total_gross_income_per_month)
+
 
