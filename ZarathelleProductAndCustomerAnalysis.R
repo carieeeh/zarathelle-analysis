@@ -9,10 +9,10 @@ Zarathelle_df_V2 <- Zarathelle_df %>%
          "City_or_municipality" = "City.Municipality",
          "Mode_of_payment" = "Mode.of.Payment",
          "Shipping_fee" = "Shipping.Fee",
-         "Product1" = "Order.1",
-         "Product2" = "Order.2",
-         "Product3" = "Order.3",
-         "Product4" = "Order.4",
+         "Product_variety1" = "Order.1",
+         "Product_variety2" = "Order.2",
+         "Product_variety3" = "Order.3",
+         "Product_variety4" = "Order.4",
          "Total_product_quantity" = "Total.Order.Quantity",
          "Total_amount_paid" = "Total.Amount.Paid")
 
@@ -54,4 +54,10 @@ Total_gross_income_per_month <- Zarathelle_df_V5 %>%
   summarize(Total_gross_income_per_month = sum(Total_gross_income_per_purchase))
 View(Total_gross_income_per_month)
 
-
+# Customer with highest number of different product variety ordered
+Customer_with_most_product_order_variety <- Zarathelle_df_V5 %>% 
+  select(ID, First_name, Last_name, Product_variety1, Product_variety2, Product_variety3, Product_variety4) %>% 
+  mutate(Is_customer_with_most_ordered_product_variety = ifelse(!is.na(Product_variety4) & nzchar(Product_variety4),
+                                                     "Yes",
+                                                     "No"))
+View(Customer_with_most_product_order_variety)
