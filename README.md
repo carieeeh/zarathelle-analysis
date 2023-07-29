@@ -12,6 +12,7 @@ install.packages("dplyr")
 install.packages("readr")
 install.packages("janitor")
 install.packages("tidyr")
+install.packages("lubridate")
 
 Load the packages in the console
 
@@ -21,3 +22,4 @@ library(dplyr)
 library(readr)
 library(janitor)
 library(tidyr)
+library(lubridate)
