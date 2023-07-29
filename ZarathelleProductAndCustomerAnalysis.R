@@ -61,3 +61,18 @@ Customer_with_most_product_order_variety <- Zarathelle_df_V5 %>%
                                                      "Yes",
                                                      "No"))
 View(Customer_with_most_product_order_variety)
+
+# Convert char product quantity to integer
+Zarathelle_df_V5$Total_product_quantity <- as.integer(gsub("\\D", "", Zarathelle_df_V5$Total_product_quantity))
+
+is_integer_column <- is.integer(Zarathelle_df_V5$Total_product_quantity)
+print(is_integer_column)
+
+View(Zarathelle_df_V5)
+
+# Customer with the highest number of product purchase quantity per month
+Customer_with_highest_order_quantity <- Zarathelle_df_V5 %>%
+  group_by(Month_ordered) %>%
+  filter(Total_product_quantity == max(Total_product_quantity)) %>%
+  select(ID, First_name, Last_name, Month_ordered, Highest_order_quantity = Total_product_quantity)
+View(Customer_with_highest_order_quantity)
