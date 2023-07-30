@@ -100,3 +100,16 @@ Most_num_city_buyers <- City_counts %>%
   filter(Num_city_buyers == max(Num_city_buyers))
 
 print(Most_num_city_buyers)
+
+# Calculate most used mode of payment
+Mop_counts <- Zarathelle_df_V5 %>% 
+  group_by(Mode_of_payment) %>% 
+  summarize(Num_used_MOP = n())
+
+View(Mop_counts)
+
+Most_used_MOP <- Mop_counts %>% 
+  filter(Num_used_MOP == max(Num_used_MOP))
+
+print(Most_used_MOP)
+
