@@ -113,3 +113,33 @@ Most_used_MOP <- Mop_counts %>%
 
 print(Most_used_MOP)
 
+
+
+# Separate the Product_and_Quantity column into two columns: Quantity and Product
+Zarathelle_df_V5 <- Zarathelle_df_V5 %>%
+  separate(Product_variety1, into = c("Quantity", "Product_variety1"), sep = "-", convert = TRUE) %>% 
+  separate(Product_variety2, into = c("Quantity2", "Product_variety2"), sep = "-", convert = TRUE) %>% 
+  separate(Product_variety3, into = c("Quantity3", "Product_variety3"), sep = "-", convert = TRUE) %>% 
+  separate(Product_variety4, into = c("Quantity4", "Product_variety4"), sep = "-", convert = TRUE)
+
+View(Zarathelle_df_V5)
+
+product_purchase_quantities <- data.frame(
+  Product = c(Zarathelle_df_V5$Product_variety1,
+              Zarathelle_df_V5$Product_variety2,
+              Zarathelle_df_V5$Product_variety3,
+              Zarathelle_df_V5$Product_variety4),
+  Quantity = c(Zarathelle_df_V5$Quantity,
+               Zarathelle_df_V5$Quantity2,
+               Zarathelle_df_V5$Quantity3,
+               Zarathelle_df_V5$Quantity4)
+)
+
+# Calculate best-selling product
+sum_product_purchase_quantities <- product_purchase_quantities %>%
+  group_by(Product) %>%
+  summarize(Total_Quantity = sum(Quantity, na.rm = TRUE)) %>% 
+  arrange(desc(Total_Quantity))
+View(sum_product_purchase_quantities)
+
+
