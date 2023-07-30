@@ -6,7 +6,6 @@
 ggplot(Total_gross_income_per_month, aes(x = Month_ordered, y = Total_gross_income_per_month)) + 
   geom_bar(stat = "identity", width = 0.5, fill = "tomato3") + 
   labs(title = "Gross Income per Month", 
-       subtitle = "Make Vs Avg. Mileage", 
        caption = "source: Zarathelle Resin and Crafts") + 
   theme(axis.text.x = element_text(angle = 65, vjust = 0.6))
 
@@ -39,6 +38,7 @@ ggplot(Province_counts, aes(x=Province, y=Num_buyers)) +
        caption = "source: Zarathelle Resin and Crafts") + 
   theme(axis.text.x = element_text(angle=65, vjust=0.6))
 
+
 # Data visualization for customer count per city or municipality
 
 ggplot(City_counts, aes(x=City_or_municipality, y=Num_city_buyers)) + 
@@ -52,3 +52,38 @@ ggplot(City_counts, aes(x=City_or_municipality, y=Num_city_buyers)) +
        y = "Number of Buyers",
        caption = "source: Zarathelle Resin and Crafts") + 
   theme(axis.text.x = element_text(angle=65, vjust=0.6))
+
+
+# Data visualization for most used mode of payment
+
+color_palette <- brewer.pal(n = nrow(Mop_counts), name = "Set3")
+
+ggplot(Mop_counts, aes(x = "", y = Percentage, fill = Mode_of_payment)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start = 0) +
+  geom_text(aes(label = paste0(Percentage, "%")), 
+            position = position_stack(vjust = 0.5),
+            size = 3) +
+  labs(title = "Mode of Payment Used by Customers Distribution",
+       x = NULL,
+       y = NULL,
+       fill = "Mode of Payment",
+       caption = "source: Zarathelle Resin and Crafts") +
+  scale_fill_manual(values = color_palette) + 
+  theme_minimal()
+
+
+
+# Data visualization in identifying the best selling product in 2021
+
+max_quantity <- max(sum_product_purchase_quantities$Total_Quantity)
+
+# Data visualization with the highest product highlighted
+ggplot(sum_product_purchase_quantities, aes(x = Product, y = Total_Quantity)) + 
+  geom_point(size = 3, color = ifelse(sum_product_purchase_quantities$Total_Quantity == max_quantity, "red", "blue")) + 
+  geom_segment(aes(x = Product, xend = Product, y = 0, yend = Total_Quantity)) + 
+  labs(title = "Best-selling product in 2021", 
+       x = "Product",
+       y = "Total Order Quantity",
+       caption = "source: Zarathelle Resin and Crafts") + 
+  theme(axis.text.x = element_text(angle = 65, vjust = 0.6))
