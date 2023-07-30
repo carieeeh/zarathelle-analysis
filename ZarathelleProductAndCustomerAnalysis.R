@@ -48,6 +48,12 @@ Zarathelle_df_V5 <- Zarathelle_df_V4 %>%
   mutate(Month_ordered = str_extract(as.character(Date), "\\w+")) %>% 
   select(Date, ID, Month_ordered, everything())
 
+# Convert the "Date" column to a date object
+Zarathelle_df_V5$Date <- dmy(Zarathelle_df_V5$Date)
+
+# Extract the month from the Date
+Zarathelle_df_V5$Month_ordered <- month(Zarathelle_df_V5$Date)
+
 # Calculate total gross income per month
 Total_gross_income_per_month <- Zarathelle_df_V5 %>% 
   group_by(Month_ordered) %>% 
@@ -67,8 +73,6 @@ Zarathelle_df_V5$Total_product_quantity <- as.integer(gsub("\\D", "", Zarathelle
 
 is_integer_column <- is.integer(Zarathelle_df_V5$Total_product_quantity)
 print(is_integer_column)
-
-View(Zarathelle_df_V5)
 
 # Customer with the highest number of product purchase quantity per month
 Customer_with_highest_order_quantity <- Zarathelle_df_V5 %>%
@@ -113,8 +117,6 @@ Most_used_MOP <- Mop_counts %>%
 
 print(Most_used_MOP)
 
-
-
 # Separate the Product_and_Quantity column into two columns: Quantity and Product
 Zarathelle_df_V5 <- Zarathelle_df_V5 %>%
   separate(Product_variety1, into = c("Quantity", "Product_variety1"), sep = "-", convert = TRUE) %>% 
@@ -141,5 +143,3 @@ sum_product_purchase_quantities <- product_purchase_quantities %>%
   summarize(Total_Quantity = sum(Quantity, na.rm = TRUE)) %>% 
   arrange(desc(Total_Quantity))
 View(sum_product_purchase_quantities)
-
-
