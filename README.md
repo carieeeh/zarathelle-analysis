@@ -23,3 +23,5 @@ library(readr)
 library(janitor)
 library(tidyr)
 library(lubridate)
+
+Run the code section by section to see step by step results.
