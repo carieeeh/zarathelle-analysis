@@ -110,6 +110,7 @@ Mop_counts <- Zarathelle_df_V5 %>%
   group_by(Mode_of_payment) %>% 
   summarize(Num_used_MOP = n())
 
+Mop_counts$Percentage <- round((Mop_counts$Num_used_MOP / sum(Mop_counts$Num_used_MOP)) * 100, 2)
 View(Mop_counts)
 
 Most_used_MOP <- Mop_counts %>% 
