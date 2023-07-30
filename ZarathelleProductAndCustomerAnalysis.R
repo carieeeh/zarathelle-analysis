@@ -76,3 +76,27 @@ Customer_with_highest_order_quantity <- Zarathelle_df_V5 %>%
   filter(Total_product_quantity == max(Total_product_quantity)) %>%
   select(ID, First_name, Last_name, Month_ordered, Highest_order_quantity = Total_product_quantity)
 View(Customer_with_highest_order_quantity)
+
+# Filter province with the most number of Zarathelle buyer
+Province_counts <- Zarathelle_df_V5 %>% 
+  group_by(Province) %>% 
+  summarize(Num_buyers = n())
+
+View(Province_counts)
+
+Most_num_buyers <- Province_counts %>% 
+  filter(Num_buyers == max(Num_buyers))
+
+print(Most_num_buyers)
+
+#Filter city/municipality with most number of buyer
+City_counts <- Zarathelle_df_V5 %>% 
+  group_by(City_or_municipality) %>% 
+  summarize(Num_city_buyers = n())
+
+View(City_counts)
+
+Most_num_city_buyers <- City_counts %>% 
+  filter(Num_city_buyers == max(Num_city_buyers))
+
+print(Most_num_city_buyers)
